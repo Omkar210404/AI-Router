@@ -17,7 +17,7 @@ A chat app that talks to each AI provider through its **own official API**, sugg
 
 <img src="docs/mobile.png" width="260" alt="Narrow screen">
 
-All screenshots are of the real app running against a local Ollama model (`qwen2.5-coder:7b` and `qwen2.5-coder-16k`).
+All screenshots are of the real app. The switching example goes Gemini 3.5 Flash → local Llama 3.2 3B → Gemini 3.5 Flash-Lite in one thread; the other replies come from local Ollama models.
 
 ## How it works
 
@@ -56,7 +56,7 @@ python -m airouter serve          # opens http://127.0.0.1:8400
 Free setup options (you need at least one):
 
 - **Gemini**: get a free key at <https://aistudio.google.com/apikey> and set `GEMINI_API_KEY`.
-- **Ollama**: install from <https://ollama.com>, then `ollama pull qwen2.5-coder:7b` (or any model). Every pulled model shows up in the picker on its own.
+- **Ollama**: install from <https://ollama.com>, then `ollama pull llama3.2:3b` (a small general model) and/or `ollama pull qwen2.5-coder:7b` (coding). Every pulled model shows up in the picker on its own.
 
 `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are optional. **They cost money**: every message to them is billed to your account. The settings page's *Test connection* button only lists models, which is free on all four providers.
 
@@ -79,8 +79,9 @@ PASS  history save/resume + model switch: 2 turns saved, model b got model a's c
 
 ## What was tested live
 
-- **Ollama**: real streaming chats through the app with `qwen2.5-coder:7b` and `qwen2.5-coder-16k`, including a switch between them mid-thread. The second model correctly answered a question that needed the first turn's context. On this machine (CPU), replies took about 5-17 s, mostly waiting for the first token.
-- **Gemini, OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but I did not run them with real keys while building this, to avoid spending money. Model names in `routing.toml` (e.g. `gemini-2.5-flash`, `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
+- **Gemini (free tier)**: real streaming chats with `gemini-3.5-flash` and `gemini-3.5-flash-lite` (about 2.5-6 s per short reply), including a Gemini → Ollama → Gemini switch in one thread where each model answered from the earlier turns. On a free key, the older `gemini-2.5-*` models returned "no longer available" and `gemini-3.1-pro-preview` returned "quota exceeded", so Pro is labelled paid and left out of the router's picks.
+- **Ollama**: real streaming chats with `llama3.2:3b`, `qwen2.5-coder:7b` and `qwen2.5-coder-16k`. On this machine (CPU), warm replies took about 5-17 s and the first reply after loading a model took 20-35 s.
+- **OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but I did not run them with real keys, to avoid spending money. Model names in `routing.toml` (e.g. `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
 
 ## Customising the router
 
@@ -88,7 +89,7 @@ Open [routing.toml](routing.toml). For example, to send coding questions to a lo
 
 ```toml
 [categories.coding]
-prefer = ["ollama:*coder*", "anthropic:claude-sonnet-5-5", "gemini:gemini-2.5-flash"]
+prefer = ["ollama:*coder*", "anthropic:claude-sonnet-5-5", "gemini:gemini-3.5-flash"]
 ```
 
 To keep an installed Ollama model out of the picker (without uninstalling it), add it to `hide` under `[ollama]` in the same file.
