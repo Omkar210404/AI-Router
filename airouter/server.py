@@ -74,7 +74,11 @@ def recommend(req: RouteIn):
 def routing_table():
     """The routing config as the router sees it, so the UI can show it."""
     cfg = config.load_routing()
-    return {"file": str(config.ROUTING_FILE), "categories": cfg["categories"]}
+    try:
+        name = config.ROUTING_FILE.relative_to(config.ROOT).as_posix()
+    except ValueError:
+        name = config.ROUTING_FILE.name
+    return {"file": name, "categories": cfg["categories"]}
 
 
 @app.get("/api/conversations")
