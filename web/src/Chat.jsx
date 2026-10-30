@@ -141,12 +141,13 @@ export default function Chat({ messages, models, model, setModel, onSend, onStop
   const [route, setRoute] = useState(null)
   const [override, setOverride] = useState('')
   const [why, setWhy] = useState(false)
-  const end = useRef(null)
+  const thread = useRef(null)
   const box = useRef(null)
   const auto = model === 'auto'
   const configured = models.filter((m) => m.configured)
 
-  useEffect(() => { end.current?.scrollIntoView({ block: 'end' }) }, [messages])
+  // Scroll only the message list; scrollIntoView would also shift the outer page.
+  useEffect(() => { const t = thread.current; if (t) t.scrollTop = t.scrollHeight }, [messages])
   useEffect(() => {
     const t = box.current
     if (t) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 220) + 'px' }
@@ -178,7 +179,7 @@ export default function Chat({ messages, models, model, setModel, onSend, onStop
   return (
     <section className="chat">
       {header}
-      <div className="thread">
+      <div className="thread" ref={thread}>
         {!messages.length ? (
           <div className="empty">
             <div className="empty-logo">{Icon.chat}</div>
@@ -200,7 +201,6 @@ export default function Chat({ messages, models, model, setModel, onSend, onStop
               ? <div key={it.key} className="divider"><span>{it.divider}</span></div>
               : <Message key={it.m.id || `t${it.i}`} m={it.m} route={it.route} models={models}
                 onRetry={it.m.error && it.i === messages.length - 1 ? () => onSend(lastUser.content, { retry: true, model: it.m.model, route: lastUser.route }) : null} />)}
-            <div ref={end} />
           </div>
         )}
       </div>
