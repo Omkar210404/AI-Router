@@ -65,28 +65,73 @@ flowchart LR
 - **Router** ([airouter/router.py](airouter/router.py) + [routing.toml](routing.toml)): each category has keywords, regex patterns, weights and optional length bonuses. Highest score wins; nothing matched means "general". The router then walks the category's `prefer` list and picks the first model you have configured. If the top choice isn't set up, it says so ("Claude Sonnet 5.5 would be first choice but isn't configured"). The file is re-read on every request, so edits apply immediately.
 - **Streaming**: the server sends Server-Sent Events (`meta`, `token`, `done`, `error`). Each saved reply stores total time, time to first token and the provider's token counts. If you press stop, the partial reply is kept and marked as stopped.
 
-## Run it
+## Run it on your computer
 
-Needs Python 3.11+ and Node 18+.
+You need **Python 3.11+**, **Node 18+** and at least one of: a free Gemini key, a free Groq key, or Ollama installed.
+
+### Step 1: Download and install
 
 ```bash
+git clone https://github.com/Omkar210404/AI-Router.git
+cd AI-Router
+
 python -m venv .venv
-.venv\Scripts\activate            # macOS/Linux: source .venv/bin/activate
+.venv\Scriptsctivate            # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 
-cd web && npm install && npm run build && cd ..
+cd web
+npm install
+npm run build
+cd ..
+```
 
-cp .env.example .env              # then fill in the keys you have
+### Step 2: Create your `.env` file
+
+```bash
+copy .env.example .env            # macOS/Linux: cp .env.example .env
+```
+
+Open `.env` in any text editor. It has one line per provider. Fill in only the ones you want and leave the rest empty. A provider with no key shows as "not configured" in the app and is never called.
+
+### Step 3: Add your own API keys
+
+| Provider | Cost | Where to get a key | Line in `.env` |
+|---|---|---|---|
+| Google Gemini | Free tier (rate limited) | <https://aistudio.google.com/apikey> | `GEMINI_API_KEY=` |
+| Groq | Free tier (rate limited) | <https://console.groq.com/keys> | `GROQ_API_KEY=` |
+| Ollama | Free, runs on your computer | No key: install from <https://ollama.com> | (none) |
+| OpenAI | **Paid** | <https://platform.openai.com/api-keys> | `OPENAI_API_KEY=` |
+| Anthropic (Claude) | **Paid** | <https://console.anthropic.com/settings/keys> | `ANTHROPIC_API_KEY=` |
+
+**Gemini (free):**
+1. Open <https://aistudio.google.com/apikey> and sign in with a Google account.
+2. Click **Create API key** and copy it.
+3. Paste it after `GEMINI_API_KEY=` in `.env` (no spaces, no quotes) and save.
+
+**Groq (free):**
+1. Open <https://console.groq.com/keys> and sign in (a Google account works).
+2. Click **Create API Key** and copy it. It starts with `gsk_`.
+3. Paste it after `GROQ_API_KEY=` in `.env` and save.
+
+**Ollama (free, local, nothing leaves your computer):**
+1. Install Ollama from <https://ollama.com> and make sure it is running.
+2. Download a model, for example `ollama pull llama3.2:3b` (about 2 GB, general questions) and/or `ollama pull qwen2.5-coder:7b` (about 4.7 GB, coding).
+3. No key needed. Every model you pull shows up in the picker by itself. Local models need free RAM; on a 16 GB laptop, close heavy apps first.
+
+**OpenAI or Claude (paid, optional):**
+1. Create an account on the provider's site (links above), add a payment method or buy credits, then create an API key. A ChatGPT or Claude chat subscription does **not** include API access.
+2. Paste the key after `OPENAI_API_KEY=` or `ANTHROPIC_API_KEY=` and save.
+3. Every message you send to these models is billed to your account. The app marks them with a **paid** tag.
+
+Keep your keys safe: `.env` is listed in `.gitignore`, so git never uploads it. Never paste a key into code, a screenshot or a public page. If a key leaks, delete it on the provider's site and create a new one.
+
+### Step 4: Start the app
+
+```bash
 python -m airouter serve          # opens http://127.0.0.1:8400
 ```
 
-Free setup options (you need at least one):
-
-- **Gemini**: get a free key at <https://aistudio.google.com/apikey> and set `GEMINI_API_KEY`.
-- **Groq**: get a free key at <https://console.groq.com/keys> and set `GROQ_API_KEY`. Fast open models (GPT-OSS, Qwen).
-- **Ollama**: install from <https://ollama.com>, then `ollama pull llama3.2:3b` (a small general model) and/or `ollama pull qwen2.5-coder:7b` (coding). Every pulled model shows up in the picker on its own.
-
-`OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are optional. **They cost money**: every message to them is billed to your account. The settings page's *Test connection* button only lists models, which is free on every provider.
+Go to **Settings** and click **Test connection** on each provider. This only lists the provider's models, which costs nothing. A green "Working" means your key is fine. If you change `.env` later, stop the app (Ctrl+C) and start it again.
 
 For frontend development, run `npm run dev` in `web/` (proxies `/api` to port 8400) alongside `python -m airouter serve --no-browser`.
 
