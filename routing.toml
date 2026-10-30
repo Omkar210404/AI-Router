@@ -27,14 +27,14 @@ tier = "paid"
 speed = "slow"
 
 [[models]]
-id = "groq:llama-3.1-8b-instant"
-label = "Llama 3.1 8B (Groq)"
+id = "groq:qwen/qwen3.8-27b"
+label = "Qwen3.8 27B (Groq)"
 tier = "free"
 speed = "fastest"
 
 [[models]]
-id = "groq:llama-3.3-70b-versatile"
-label = "Llama 3.3 70B (Groq)"
+id = "groq:openai/gpt-oss-20b"
+label = "GPT-OSS 20B (Groq)"
 tier = "free"
 speed = "fast"
 
@@ -133,9 +133,9 @@ patterns = ['^\s*(what|who|when|where|which)\b[^.]*\?\s*$']
 pattern_weight = 1
 short_words = 12
 short_bonus = 1
-prefer = ["groq:llama-3.1-8b-instant", "gemini:gemini-3.5-flash-lite", "gemini:gemini-3.5-flash",
+prefer = ["groq:qwen/qwen3.8-27b", "gemini:gemini-3.5-flash-lite", "gemini:gemini-3.5-flash",
   "anthropic:claude-haiku-5-5", "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
-reason = "Quick fact: a fast, cheap model is enough. Groq's small Llama answers almost instantly."
+reason = "Quick fact: a fast, cheap model is enough. Qwen on Groq answers in under a second."
 
 [categories.reasoning]
 label = "Long reasoning"
@@ -159,6 +159,6 @@ reason = "Image question: needs a multimodal model. Note: AIRouter can't attach 
 [categories.general]
 label = "General chat"
 keywords = []
-prefer = ["gemini:gemini-3.5-flash", "groq:llama-3.3-70b-versatile", "anthropic:claude-haiku-5-5",
+prefer = ["gemini:gemini-3.5-flash", "groq:openai/gpt-oss-20b", "anthropic:claude-haiku-5-5",
   "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
 reason = "General chat: a fast all-rounder fits."

@@ -7,7 +7,7 @@ class GroqProvider(Provider):
     label = "Groq"
     key_env = "GROQ_API_KEY"
     tier = "free"
-    note = "Has a free tier with rate limits. Runs open models (Llama, GPT-OSS) very fast."
+    note = "Has a free tier with rate limits. Runs open models (GPT-OSS, Qwen) very fast."
 
     def _client(self):
         from groq import Groq
