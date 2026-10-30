@@ -12,7 +12,14 @@ def main():
     s.add_argument("--port", type=int, default=8400)
     s.add_argument("--no-browser", action="store_true")
     sub.add_parser("selftest", help="offline checks: router, provider interface, history")
+    e = sub.add_parser("export-demo", help="write chats + routing rules for the static Pages demo")
+    e.add_argument("ids", nargs="*", help="conversation ids (default: all)")
     args = ap.parse_args()
+
+    if args.cmd == "export-demo":
+        from .demo import export
+        print(f"Wrote {export(args.ids)}")
+        return
 
     if args.cmd == "selftest":
         from .selftest import run
