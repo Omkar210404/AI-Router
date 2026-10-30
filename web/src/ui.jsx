@@ -9,7 +9,7 @@ const MARKS = {
   ollama: { color: 'var(--c-teal)', path: 'M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z' },
   openai: { color: 'var(--c-green)', path: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z' },
   anthropic: { color: 'var(--c-amber)', path: 'M12 3.5l9 16H3z' },
-  auto: { color: 'var(--accent)', path: 'M4 17l5-5-5-5M12 19h8' },
+  auto: { color: 'var(--accent)', path: 'M5 4v5a5 5 0 0 0 5 5h9M15 10l4 4-4 4' },
 }
 
 export function ProviderMark({ provider, size = 16 }) {
