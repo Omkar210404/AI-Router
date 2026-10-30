@@ -6,6 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 // Brand-neutral provider marks: a shape + colour per provider, no logos.
 const MARKS = {
   gemini: { color: 'var(--c-violet)', path: 'M12 3l9 9-9 9-9-9z' },
+  groq: { color: 'var(--c-rose)', path: 'M5.5 5.5h13v13h-13z' },
   ollama: { color: 'var(--c-teal)', path: 'M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z' },
   openai: { color: 'var(--c-green)', path: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z' },
   anthropic: { color: 'var(--c-amber)', path: 'M12 3.5l9 16H3z' },
