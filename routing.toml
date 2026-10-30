@@ -7,21 +7,23 @@
 hide = ["qwen2.5-coder:7b"]
 
 [[models]]
-id = "gemini:gemini-2.5-flash"
-label = "Gemini 2.5 Flash"
+id = "gemini:gemini-3.5-flash"
+label = "Gemini 3.5 Flash"
 tier = "free"
 speed = "fast"
 
 [[models]]
-id = "gemini:gemini-2.5-flash-lite"
-label = "Gemini 2.5 Flash-Lite"
+id = "gemini:gemini-3.5-flash-lite"
+label = "Gemini 3.5 Flash-Lite"
 tier = "free"
 speed = "fastest"
 
 [[models]]
-id = "gemini:gemini-2.5-pro"
-label = "Gemini 2.5 Pro"
-tier = "free"
+# Pro is not part of Gemini's free tier (returns "quota exceeded" without billing),
+# so it is labelled paid and left out of the router's preference lists.
+id = "gemini:gemini-3.1-pro-preview"
+label = "Gemini 3.1 Pro"
+tier = "paid"
 speed = "slow"
 
 [[models]]
@@ -71,9 +73,9 @@ keywords = ["code", "function", "bug", "debug", "error", "exception", "traceback
   "react", "css", "html", "json", "script", "npm", "pip", "docker", "null pointer", "segfault"]
 keyword_weight = 2
 patterns = ['```', '\bdef \w+\(', '\bfunction\s*\w*\(', '=>', '\w+\(\)', '\bimport \w+', ';\s*$', '</?\w+>']
-prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-2.5-pro", "ollama:*coder*",
-  "gemini:gemini-2.5-flash", "ollama:*"]
-reason = "Coding question: Claude models tend to do well on code. A code-tuned local model is a free option."
+prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-3.5-flash", "ollama:*coder*",
+  "ollama:*"]
+reason = "Coding question: Claude models tend to do well on code. Gemini Flash and a code-tuned local model are free options."
 
 [categories.math]
 label = "Math"
@@ -83,8 +85,8 @@ keywords = ["solve", "equation", "integral", "derivative", "probability", "calcu
 keyword_weight = 3
 pattern_weight = 4
 patterns = ['\d\s*[a-z]?\s*[-+*/^×÷=]\s*\d', '\d+(\.\d+)?\s*%', '\b[xyz]\s*[=^]', '\\(frac|int|sum)', '√|∫|∑|π']
-prefer = ["openai:gpt-5", "gemini:gemini-2.5-pro", "anthropic:claude-sonnet-5-5",
-  "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
+prefer = ["openai:gpt-5", "anthropic:claude-sonnet-5-5",
+  "gemini:gemini-3.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Math: a model with strong step-by-step reasoning is the safer bet."
 
 [categories.creative]
@@ -93,7 +95,7 @@ keywords = ["poem", "story", "short story", "lyrics", "song", "haiku", "write a"
   "fiction", "character", "plot", "novel", "screenplay", "joke", "slogan", "tagline", "rhyme",
   "essay", "blog post", "toast", "speech"]
 patterns = ['^\s*(write|compose|draft|imagine)\b']
-prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
+prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-3.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Creative writing: Claude is often preferred for natural-sounding prose."
 
 [categories.quick_fact]
@@ -104,7 +106,7 @@ patterns = ['^\s*(what|who|when|where|which)\b[^.]*\?\s*$']
 pattern_weight = 1
 short_words = 12
 short_bonus = 1
-prefer = ["gemini:gemini-2.5-flash-lite", "gemini:gemini-2.5-flash", "anthropic:claude-haiku-5-5",
+prefer = ["gemini:gemini-3.5-flash-lite", "gemini:gemini-3.5-flash", "anthropic:claude-haiku-5-5",
   "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
 reason = "Quick fact: a fast, cheap model is enough. No need to wait for a big one."
 
@@ -115,8 +117,8 @@ keywords = ["step by step", "compare", "trade-offs", "tradeoffs", "pros and cons
   "recommend", "in depth", "detailed", "think through", "reason about"]
 long_words = 60
 long_bonus = 2
-prefer = ["gemini:gemini-2.5-pro", "openai:gpt-5", "anthropic:claude-sonnet-5-5",
-  "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
+prefer = ["openai:gpt-5", "anthropic:claude-sonnet-5-5",
+  "gemini:gemini-3.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Long reasoning: a larger model is worth the extra wait for multi-step thinking."
 
 [categories.vision]
@@ -124,11 +126,11 @@ label = "Image / vision"
 keywords = ["image", "photo", "picture", "screenshot", "diagram", "chart", "ocr", "this pic",
   "in the image", "look at", "what's in"]
 keyword_weight = 3
-prefer = ["gemini:gemini-2.5-flash", "openai:gpt-5", "anthropic:claude-sonnet-5-5"]
+prefer = ["gemini:gemini-3.5-flash", "openai:gpt-5", "anthropic:claude-sonnet-5-5"]
 reason = "Image question: needs a multimodal model. Note: AIRouter can't attach images yet, so describe the image in text."
 
 [categories.general]
 label = "General chat"
 keywords = []
-prefer = ["gemini:gemini-2.5-flash", "anthropic:claude-haiku-5-5", "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
+prefer = ["gemini:gemini-3.5-flash", "anthropic:claude-haiku-5-5", "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
 reason = "General chat: a fast all-rounder fits."

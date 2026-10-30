@@ -120,8 +120,8 @@ ROUTER_CASES = [
 
 FAKE_CATALOG = [  # configured flags chosen to exercise fallback
     {"id": "anthropic:claude-sonnet-5-5", "label": "Claude Sonnet 5.5", "configured": False},
-    {"id": "gemini:gemini-2.5-flash-lite", "label": "Gemini 2.5 Flash-Lite", "configured": True},
-    {"id": "gemini:gemini-2.5-flash", "label": "Gemini 2.5 Flash", "configured": True},
+    {"id": "gemini:gemini-3.5-flash-lite", "label": "Gemini 3.5 Flash-Lite", "configured": True},
+    {"id": "gemini:gemini-3.5-flash", "label": "Gemini 3.5 Flash", "configured": True},
     {"id": "ollama:qwen2.5-coder:7b", "label": "qwen2.5-coder:7b", "configured": True},
 ]
 
@@ -135,10 +135,12 @@ def check_router():
             wrong.append(f"{text[:40]!r} -> {r['category']} (expected {expected})")
     assert not wrong, "; ".join(wrong)
     code = route(ROUTER_CASES[0][0], FAKE_CATALOG)
-    assert code["model"] == "ollama:qwen2.5-coder:7b", code   # Claude not configured -> coder fallback
+    assert code["model"] == "gemini:gemini-3.5-flash", code   # Claude not configured -> next in list
+    offline = [{**m, "configured": m["id"].startswith("ollama:")} for m in FAKE_CATALOG]
+    assert route(ROUTER_CASES[0][0], offline)["model"] == "ollama:qwen2.5-coder:7b"  # local coder fallback
     assert "Claude Sonnet 5.5" in code["note"] and code["reason"]
     fact = route("What is the capital of Australia?", FAKE_CATALOG)
-    assert fact["model"] == "gemini:gemini-2.5-flash-lite"
+    assert fact["model"] == "gemini:gemini-3.5-flash-lite"
     none = route("hello", [{**m, "configured": False} for m in FAKE_CATALOG])
     assert none["model"] is None
     return f"{len(ROUTER_CASES)}/{len(ROUTER_CASES)} sample queries routed as expected; fallbacks explained"
