@@ -1,3 +1,8 @@
+import { demoApi } from './demo.js'
+
+// `vite build --mode demo` makes the static GitHub Pages build, which has no backend.
+export const DEMO = import.meta.env.MODE === 'demo'
+
 async function json(path, opts) {
   const r = await fetch(path, opts)
   const body = await r.json().catch(() => ({}))
@@ -5,7 +10,7 @@ async function json(path, opts) {
   return body
 }
 
-export const api = {
+const realApi = {
   models: () => json('/api/models'),
   providers: () => json('/api/providers'),
   testProvider: (name) => json(`/api/providers/${name}/test`, { method: 'POST' }),
@@ -15,6 +20,8 @@ export const api = {
   route: (text) => json('/api/route', post({ text })),
   routing: () => json('/api/routing'),
 }
+
+export const api = DEMO ? demoApi : realApi
 
 function post(body) {
   return { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
