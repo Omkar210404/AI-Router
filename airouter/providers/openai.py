@@ -15,7 +15,8 @@ class OpenAIProvider(Provider):
 
     def stream(self, model, messages):
         self.require()
-        stream = self._client().chat.completions.create(
+        client = self._client()
+        stream = client.chat.completions.create(
             model=model, messages=messages, stream=True, stream_options={"include_usage": True})
         for chunk in stream:
             if chunk.choices and chunk.choices[0].delta.content:
@@ -25,4 +26,5 @@ class OpenAIProvider(Provider):
                        "output": chunk.usage.completion_tokens}
 
     def list_models(self):
-        return [m.id for m in self._client().models.list()]
+        client = self._client()
+        return [m.id for m in client.models.list()]

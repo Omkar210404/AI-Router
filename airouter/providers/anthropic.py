@@ -18,11 +18,13 @@ class AnthropicProvider(Provider):
         # Claude needs the first turn to be from the user.
         while messages and messages[0]["role"] != "user":
             messages = messages[1:]
-        with self._client().messages.stream(model=model, max_tokens=4096, messages=messages) as s:
+        client = self._client()
+        with client.messages.stream(model=model, max_tokens=4096, messages=messages) as s:
             for text in s.text_stream:
                 yield {"type": "token", "text": text}
             usage = s.get_final_message().usage
         yield {"type": "usage", "input": usage.input_tokens, "output": usage.output_tokens}
 
     def list_models(self):
-        return [m.id for m in self._client().models.list()]
+        client = self._client()
+        return [m.id for m in client.models.list()]
