@@ -2,6 +2,8 @@
 
 A chat app that talks to each AI provider through its **own official API**, suggests which model fits your question (and says why), and lets you switch models in the middle of a conversation without losing context.
 
+**Live demo: <https://omkar210404.github.io/AI-Router/>.** The router works live there: type any question and see which AI it picks and why. The chats in the sidebar were recorded from the real app. GitHub Pages has no server, so the demo doesn't call any AI; to chat for real, run it on your computer with your own keys (steps below).
+
 - **Direct integrations, no aggregator.** Gemini (`google-genai`), Groq (`groq`), OpenAI (`openai`), Anthropic (`anthropic`) and Ollama (`ollama`), each through its own official SDK with its own key in `.env`.
 - **Router.** Classifies each message (private, coding, math, creative, quick fact, long reasoning, image, general) with simple rules, picks the first configured model from an editable preference list, and shows the reason and the signals it matched. You can accept or override.
 - **Switch models any time.** The new model receives the whole conversation so far. Every reply shows which model wrote it.
@@ -9,6 +11,29 @@ A chat app that talks to each AI provider through its **own official API**, sugg
 - **Private stays local.** Messages that mention things like bank details, salary, passwords or medical reports are routed to the local Ollama model, so they never leave your computer.
 
 ![Routed coding answer](docs/routed.png)
+
+## Which AI does it pick?
+
+In **Auto** mode the router sorts your message into a category, then walks that category's preference list and picks the **first model you have a key for**. So the answer depends on which keys you've added. This table comes from running the router on these exact questions:
+
+| You ask | Category | Ollama only | Free setup (Gemini + Groq + Ollama) | All keys (+ OpenAI + Claude) |
+|---|---|---|---|---|
+| What is the capital of Japan? | Quick fact | llama3.2:3b (local) | Qwen3.8 27B (Groq) | Qwen3.8 27B (Groq) |
+| Solve 3x + 7 = 22 for x | Math | llama3.2:3b (local) | GPT-OSS 120B (Groq) | GPT-5 |
+| Write a Python function that checks if a number is prime | Coding | qwen2.5-coder:7b (local) | Gemini 3.5 Flash | Claude Sonnet 5.5 |
+| Write a short poem about the monsoon | Creative writing | llama3.2:3b (local) | Gemini 3.5 Flash | Claude Sonnet 5.5 |
+| Compare SQLite and PostgreSQL for a side project, step by step | Long reasoning | llama3.2:3b (local) | GPT-OSS 120B (Groq) | GPT-5 |
+| Look at this screenshot and tell me what the error says | Image / vision | llama3.2:3b (local)\* | Gemini 3.5 Flash | Gemini 3.5 Flash |
+| Keep this private: what should I ask my doctor about my blood pressure? | Private / personal | llama3.2:3b (local) | llama3.2:3b (local) | llama3.2:3b (local) |
+| reasons for diabetes | General chat | llama3.2:3b (local) | Gemini 3.5 Flash | Gemini 3.5 Flash |
+
+\* No vision model is set up, so the router falls back to any working model and says so.
+
+How to read it:
+- **Private questions always stay on your computer.** Words like *private, bank, salary, password, medical report* send the message to local Ollama, even when cloud keys are set.
+- **Quick facts go to the fastest model**, and math and step-by-step questions go to a reasoning model.
+- Click **Why?** above the text box to see the category, the reason and the exact words that matched. Use the dropdown next to it to pick a different model before sending.
+- The choices live in [routing.toml](routing.toml), and you can change them (see [Customising the router](#customising-the-router)).
 
 ## Screenshots
 
@@ -70,7 +95,7 @@ For frontend development, run `npm run dev` in `web/` (proxies `/api` to port 84
 `python -m airouter selftest` needs no keys and no network. It runs the router on 14 sample queries, exercises the provider interface with a mock provider, checks that providers without keys refuse to answer, and runs a two-turn chat through the real HTTP endpoint (switching models between turns) before reloading it from SQLite. Output from this repo:
 
 ```
-PASS  router classifies sample queries: 13/14 sample queries routed as expected; fallbacks explained
+PASS  router classifies sample queries: 14/14 sample queries routed as expected; fallbacks explained
 PASS  provider interface (mock): stream yields tokens then usage; send_message joins them
 PASS  unconfigured provider is honest: gemini/groq/openai/anthropic without keys -> 'not configured', no reply produced
 PASS  history save/resume + model switch: 2 turns saved, model b got model a's context, thread resumes from DB
