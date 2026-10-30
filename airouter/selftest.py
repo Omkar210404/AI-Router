@@ -116,6 +116,7 @@ ROUTER_CASES = [
     ("Compare SQLite and PostgreSQL for a side project and recommend one, step by step.", "reasoning"),
     ("Can you look at this screenshot and tell me what the error dialog says?", "vision"),
     ("hey, how are you doing today", "general"),
+    ("Summarise my bank statement, keep it private", "private"),
 ]
 
 FAKE_CATALOG = [  # configured flags chosen to exercise fallback
@@ -139,6 +140,8 @@ def check_router():
     offline = [{**m, "configured": m["id"].startswith("ollama:")} for m in FAKE_CATALOG]
     assert route(ROUTER_CASES[0][0], offline)["model"] == "ollama:qwen2.5-coder:7b"  # local coder fallback
     assert "Claude Sonnet 5.5" in code["note"] and code["reason"]
+    private = route("Summarise my bank statement, keep it private", FAKE_CATALOG)
+    assert private["model"].startswith("ollama:"), private   # stays local even though Gemini is set up
     fact = route("What is the capital of Australia?", FAKE_CATALOG)
     assert fact["model"] == "gemini:gemini-3.5-flash-lite"
     none = route("hello", [{**m, "configured": False} for m in FAKE_CATALOG])

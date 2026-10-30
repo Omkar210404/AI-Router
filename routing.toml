@@ -65,6 +65,15 @@ speed = "medium"
 # Change them to match your own experience.
 # ---------------------------------------------------------------------------
 
+[categories.private]
+label = "Private / personal"
+keywords = ["private", "confidential", "personal", "secret", "offline", "locally", "don't share",
+  "password", "bank", "bank statement", "salary", "medical report", "my health", "aadhaar",
+  "pan card", "passport", "phone number", "home address", "my diary"]
+keyword_weight = 3
+prefer = ["ollama:llama*", "ollama:*"]
+reason = "Private or personal info: a local model keeps it on your computer. Nothing is sent to a cloud provider."
+
 [categories.coding]
 label = "Coding"
 keywords = ["code", "function", "bug", "debug", "error", "exception", "traceback", "stack trace",
