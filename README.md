@@ -58,7 +58,7 @@ python -m airouter serve          # opens http://127.0.0.1:8400
 Free setup options (you need at least one):
 
 - **Gemini**: get a free key at <https://aistudio.google.com/apikey> and set `GEMINI_API_KEY`.
-- **Groq**: get a free key at <https://console.groq.com/keys> and set `GROQ_API_KEY`. Fast open models (Llama, GPT-OSS).
+- **Groq**: get a free key at <https://console.groq.com/keys> and set `GROQ_API_KEY`. Fast open models (GPT-OSS, Qwen).
 - **Ollama**: install from <https://ollama.com>, then `ollama pull llama3.2:3b` (a small general model) and/or `ollama pull qwen2.5-coder:7b` (coding). Every pulled model shows up in the picker on its own.
 
 `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are optional. **They cost money**: every message to them is billed to your account. The settings page's *Test connection* button only lists models, which is free on every provider.
@@ -83,8 +83,10 @@ PASS  history save/resume + model switch: 2 turns saved, model b got model a's c
 ## What was tested live
 
 - **Gemini (free tier)**: real streaming chats with `gemini-3.5-flash` and `gemini-3.5-flash-lite` (about 2.5-6 s per short reply), including a Gemini → Ollama → Gemini switch in one thread where each model answered from the earlier turns. On a free key, the older `gemini-2.5-*` models returned "no longer available" and `gemini-3.1-pro-preview` returned "quota exceeded", so Pro is labelled paid and left out of the router's picks.
-- **Ollama**: real streaming chats with `llama3.2:3b`, `qwen2.5-coder:7b` and `qwen2.5-coder-16k`. On this machine (CPU), warm replies took about 5-17 s and the first reply after loading a model took 20-35 s.
-- **Groq, OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but have not been run with real keys yet (Groq: no key added yet; OpenAI/Anthropic: to avoid spending money). Model names in `routing.toml` (e.g. `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
+- **Ollama**: real streaming chats with `llama3.2:3b`, `qwen2.5-coder:7b` and `qwen2.5-coder-16k`. On this machine (Ryzen 5 laptop, 16 GB RAM), warm replies took about 5-17 s and the first reply after loading a model took 20-35 s. Once, with under 2 GB of RAM free, loading the model took over half an hour, so local models need free memory.
+- **Groq (free tier)**: real chats with `qwen/qwen3.8-27b`, `openai/gpt-oss-20b` and `openai/gpt-oss-120b`, about 1-2.5 s per short reply. The Llama models Groq used to host were no longer listed for this key.
+- **Auto mode across providers**: in one live run the router sent a quick fact to Qwen on Groq (1.2 s), an equation to GPT-OSS 120B on Groq (1.5 s), a poem and a general question to Gemini 3.5 Flash (8-15 s) and a salary/budget question to local Llama. One Gemini request failed with a temporary `503 UNAVAILABLE` (model overloaded); the app shows the error and a *Try again* button rather than a made-up answer.
+- **OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but have not been run with real keys, to avoid spending money. Model names in `routing.toml` (e.g. `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
 
 ## Customising the router
 
