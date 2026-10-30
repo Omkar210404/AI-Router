@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { api, streamChat } from './api.js'
+import { DEMO, api, streamChat } from './api.js'
+import { REPO_URL } from './demo.js'
 import Chat from './Chat.jsx'
 import Settings from './Settings.jsx'
 import { Icon, timeAgo } from './ui.jsx'
@@ -64,6 +65,10 @@ export default function App() {
     const draft = { role: 'assistant', content: '', model: chosen, streaming: !error, error }
     setMessages((ms) => [...(retry ? ms.slice(0, -1) : ms), ...(retry ? [] : [{ role: 'user', content: text, route }]), draft])
     if (error || !chosen) return
+    if (DEMO) {  // static demo: show what would happen instead of calling an AI
+      setMessages((ms) => [...ms.slice(0, -1), { ...draft, streaming: false, demo: true }])
+      return
+    }
     const patchDraft = (fn) => setMessages((ms) => [...ms.slice(0, -1), fn(ms[ms.length - 1])])
     setStreaming(true)
     abort.current = new AbortController()
@@ -133,6 +138,12 @@ export default function App() {
       </aside>
       <div className="scrim" onClick={() => setNavOpen(false)} />
       <main>
+        {DEMO && (
+          <div className="demo-bar">
+            <strong>Live demo.</strong> The router box works: type any question to see which AI it picks and why.
+            Chats in the sidebar were recorded from the real app. <a href={REPO_URL} target="_blank" rel="noreferrer">Run it with your own keys →</a>
+          </div>
+        )}
         {view === 'settings' ? (
           <div className="chat">
             {topbar('Settings')}
