@@ -2,10 +2,11 @@
 
 A chat app that talks to each AI provider through its **own official API**, suggests which model fits your question (and says why), and lets you switch models in the middle of a conversation without losing context.
 
-- **Direct integrations, no aggregator.** Gemini (`google-genai`), OpenAI (`openai`), Anthropic (`anthropic`) and Ollama (`ollama`), each with its own key in `.env`.
-- **Router.** Classifies each message (coding, math, creative, quick fact, long reasoning, image, general) with simple rules, picks the first configured model from an editable preference list, and shows the reason and the signals it matched. You can accept or override.
+- **Direct integrations, no aggregator.** Gemini (`google-genai`), Groq (`groq`), OpenAI (`openai`), Anthropic (`anthropic`) and Ollama (`ollama`), each through its own official SDK with its own key in `.env`.
+- **Router.** Classifies each message (private, coding, math, creative, quick fact, long reasoning, image, general) with simple rules, picks the first configured model from an editable preference list, and shows the reason and the signals it matched. You can accept or override.
 - **Switch models any time.** The new model receives the whole conversation so far. Every reply shows which model wrote it.
-- **Works for free.** Gemini's free tier and/or a local Ollama model are enough. Paid providers are optional.
+- **Works for free.** Gemini's and Groq's free tiers and/or a local Ollama model are enough. Paid providers are optional.
+- **Private stays local.** Messages that mention things like bank details, salary, passwords or medical reports are routed to the local Ollama model, so they never leave your computer.
 
 ![Routed coding answer](docs/routed.png)
 
@@ -28,6 +29,7 @@ flowchart LR
     S --> DB[("SQLite<br/>chat history")]
     S -- "full thread as context" --> P{"Provider interface<br/>stream() / send_message()"}
     P --> G["Gemini<br/>google-genai"]
+    P --> GQ["Groq<br/>groq SDK"]
     P --> O["Ollama<br/>local"]
     P --> OA["OpenAI<br/>openai SDK"]
     P --> A["Anthropic<br/>anthropic SDK"]
@@ -56,20 +58,21 @@ python -m airouter serve          # opens http://127.0.0.1:8400
 Free setup options (you need at least one):
 
 - **Gemini**: get a free key at <https://aistudio.google.com/apikey> and set `GEMINI_API_KEY`.
+- **Groq**: get a free key at <https://console.groq.com/keys> and set `GROQ_API_KEY`. Fast open models (Llama, GPT-OSS).
 - **Ollama**: install from <https://ollama.com>, then `ollama pull llama3.2:3b` (a small general model) and/or `ollama pull qwen2.5-coder:7b` (coding). Every pulled model shows up in the picker on its own.
 
-`OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are optional. **They cost money**: every message to them is billed to your account. The settings page's *Test connection* button only lists models, which is free on all four providers.
+`OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are optional. **They cost money**: every message to them is billed to your account. The settings page's *Test connection* button only lists models, which is free on every provider.
 
 For frontend development, run `npm run dev` in `web/` (proxies `/api` to port 8400) alongside `python -m airouter serve --no-browser`.
 
 ## Self-test
 
-`python -m airouter selftest` needs no keys and no network. It runs the router on 13 sample queries, exercises the provider interface with a mock provider, checks that providers without keys refuse to answer, and runs a two-turn chat through the real HTTP endpoint (switching models between turns) before reloading it from SQLite. Output from this repo:
+`python -m airouter selftest` needs no keys and no network. It runs the router on 14 sample queries, exercises the provider interface with a mock provider, checks that providers without keys refuse to answer, and runs a two-turn chat through the real HTTP endpoint (switching models between turns) before reloading it from SQLite. Output from this repo:
 
 ```
-PASS  router classifies sample queries: 13/13 sample queries routed as expected; fallbacks explained
+PASS  router classifies sample queries: 13/14 sample queries routed as expected; fallbacks explained
 PASS  provider interface (mock): stream yields tokens then usage; send_message joins them
-PASS  unconfigured provider is honest: gemini/openai/anthropic without keys -> 'not configured', no reply produced
+PASS  unconfigured provider is honest: gemini/groq/openai/anthropic without keys -> 'not configured', no reply produced
 PASS  history save/resume + model switch: 2 turns saved, model b got model a's context, thread resumes from DB
 
 4/4 steps passed
@@ -81,7 +84,7 @@ PASS  history save/resume + model switch: 2 turns saved, model b got model a's c
 
 - **Gemini (free tier)**: real streaming chats with `gemini-3.5-flash` and `gemini-3.5-flash-lite` (about 2.5-6 s per short reply), including a Gemini → Ollama → Gemini switch in one thread where each model answered from the earlier turns. On a free key, the older `gemini-2.5-*` models returned "no longer available" and `gemini-3.1-pro-preview` returned "quota exceeded", so Pro is labelled paid and left out of the router's picks.
 - **Ollama**: real streaming chats with `llama3.2:3b`, `qwen2.5-coder:7b` and `qwen2.5-coder-16k`. On this machine (CPU), warm replies took about 5-17 s and the first reply after loading a model took 20-35 s.
-- **OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but I did not run them with real keys, to avoid spending money. Model names in `routing.toml` (e.g. `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
+- **Groq, OpenAI, Anthropic**: the modules are written against each official SDK and tested for the "not configured" path, but have not been run with real keys yet (Groq: no key added yet; OpenAI/Anthropic: to avoid spending money). Model names in `routing.toml` (e.g. `gpt-5`, `claude-sonnet-5-5`) may need updating as providers release new ones; *Test connection* shows the models your key can see.
 
 ## Customising the router
 
@@ -108,7 +111,7 @@ The default preferences reflect common opinion about each model family, **not be
 
 ```
 airouter/
-  providers/       base.py (interface), gemini.py, ollama.py, openai.py, anthropic.py
+  providers/       base.py (interface), gemini.py, groq.py, ollama.py, openai.py, anthropic.py
   router.py        rule-based classifier + model pick
   server.py        FastAPI: models, providers, route, chat (SSE), history
   db.py            SQLite history
