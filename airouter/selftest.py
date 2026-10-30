@@ -51,11 +51,11 @@ def check_unconfigured_is_honest():
     import os
     from .providers.base import NotConfigured
     saved = {}
-    for name in ("gemini", "openai", "anthropic"):
+    for name in ("gemini", "groq", "openai", "anthropic"):
         p = PROVIDERS[name]
         saved[p.key_env] = os.environ.pop(p.key_env, None)
     try:
-        for name in ("gemini", "openai", "anthropic"):
+        for name in ("gemini", "groq", "openai", "anthropic"):
             p = PROVIDERS[name]
             status = p.test()
             assert not status["ok"] and p.key_env in status["detail"], status
@@ -66,7 +66,7 @@ def check_unconfigured_is_honest():
                 pass
     finally:
         os.environ.update({k: v for k, v in saved.items() if v})
-    return "gemini/openai/anthropic without keys -> 'not configured', no reply produced"
+    return "gemini/groq/openai/anthropic without keys -> 'not configured', no reply produced"
 
 
 def check_history_and_switching(tmp: Path):
