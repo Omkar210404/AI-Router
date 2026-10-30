@@ -433,14 +433,62 @@
  },
  "conversations": [
   {
-   "id": "b46a20d46223",
-   "title": "What is the capital of Japan?",
-   "created_at": 1793360021.0640585,
-   "updated_at": 1793360022.2383654,
+   "id": "987da3efcc6b",
+   "title": "Write a short poem about the monsoon.",
+   "created_at": 1793363834.325415,
+   "updated_at": 1793363910.1879506,
    "messages": [
     {
-     "id": 33,
-     "conversation_id": "b46a20d46223",
+     "id": 11,
+     "conversation_id": "987da3efcc6b",
+     "role": "user",
+     "content": "Write a short poem about the monsoon.",
+     "model": null,
+     "latency_ms": null,
+     "first_token_ms": null,
+     "tokens_in": null,
+     "tokens_out": null,
+     "route": {
+      "label": "Creative writing",
+      "category": "creative",
+      "reason": "Creative writing: Claude is often preferred for natural-sounding prose.",
+      "note": "Claude Sonnet 5.5 would be first choice but isn't configured.",
+      "signals": [
+       "poem",
+       "write a",
+       "pattern ^\\s*(write|compose|draft|imagine)\\b"
+      ],
+      "model": "gemini:gemini-3.5-flash",
+      "overridden": false
+     },
+     "stopped": 0,
+     "created_at": 1793363834.3344803
+    },
+    {
+     "id": 18,
+     "conversation_id": "987da3efcc6b",
+     "role": "assistant",
+     "content": "Dark clouds gather, heavy, deep,\nTo break the summer’s dusty sleep.\nA sudden breeze begins to blow,\nAnd cools the restless world below.\n\nThen falls the rain in silver sheets,\nOn thirsty leaves and quiet streets,\nAwakening the scented earth\nIn one great burst of joy and birth.\n\nIt drums a dance on windowpanes,\nA sweet release in endless rains,\nUnfolding life in shades of green—\nThe freshest world you've ever seen.",
+     "model": "gemini:gemini-3.5-flash",
+     "latency_ms": 9770,
+     "first_token_ms": 9377,
+     "tokens_in": 9,
+     "tokens_out": 105,
+     "route": null,
+     "stopped": 0,
+     "created_at": 1793363910.1858609
+    }
+   ]
+  },
+  {
+   "id": "13c90126947f",
+   "title": "What is the capital of Japan?",
+   "created_at": 1793363870.956335,
+   "updated_at": 1793363872.073579,
+   "messages": [
+    {
+     "id": 16,
+     "conversation_id": "13c90126947f",
      "role": "user",
      "content": "What is the capital of Japan?",
      "model": null,
@@ -463,33 +511,33 @@
       "overridden": false
      },
      "stopped": 0,
-     "created_at": 1793360021.07115
+     "created_at": 1793363870.9634142
     },
     {
-     "id": 34,
-     "conversation_id": "b46a20d46223",
+     "id": 17,
+     "conversation_id": "13c90126947f",
      "role": "assistant",
      "content": "The capital of Japan is **Tokyo**.",
      "model": "groq:qwen/qwen3.8-27b",
-     "latency_ms": 1156,
-     "first_token_ms": 1142,
+     "latency_ms": 1098,
+     "first_token_ms": 1078,
      "tokens_in": 19,
      "tokens_out": 10,
      "route": null,
      "stopped": 0,
-     "created_at": 1793360022.2373621
+     "created_at": 1793363872.0712621
     }
    ]
   },
   {
-   "id": "2575df034735",
+   "id": "0d2ed9b854dd",
    "title": "Solve 3x + 7 = 22 for x",
-   "created_at": 1793360027.4586732,
-   "updated_at": 1793360028.9982388,
+   "created_at": 1793363864.109126,
+   "updated_at": 1793363865.685927,
    "messages": [
     {
-     "id": 35,
-     "conversation_id": "2575df034735",
+     "id": 14,
+     "conversation_id": "0d2ed9b854dd",
      "role": "user",
      "content": "Solve 3x + 7 = 22 for x",
      "model": null,
@@ -510,35 +558,35 @@
       "overridden": false
      },
      "stopped": 0,
-     "created_at": 1793360027.4859324
+     "created_at": 1793363864.117443
     },
     {
-     "id": 36,
-     "conversation_id": "2575df034735",
+     "id": 15,
+     "conversation_id": "0d2ed9b854dd",
      "role": "assistant",
-     "content": "To isolate \\(x\\) in the equation  \n\n\\[\n3x + 7 = 22\n\\]\n\nfollow these steps:\n\n1. **Subtract 7 from both sides** to remove the constant term on the left:  \n\n   \\[\n   3x + 7 - 7 = 22 - 7 \\;\\Longrightarrow\\; 3x = 15\n   \\]\n\n2. **Divide both sides by 3** to solve for \\(x\\):  \n\n   \\[\n   \\frac{3x}{3} = \\frac{15}{3} \\;\\Longrightarrow\\; x = 5\n   \\]\n\n**Answer:** \\(x = 5\\)",
+     "content": "To isolate \\(x\\) in the equation  \n\n\\[\n3x + 7 = 22,\n\\]\n\nfollow these steps:\n\n1. **Subtract 7 from both sides** to move the constant term to the right side:\n   \\[\n   3x + 7 - 7 = 22 - 7 \\quad\\Rightarrow\\quad 3x = 15.\n   \\]\n\n2. **Divide both sides by 3** to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} = \\frac{15}{3} \\quad\\Rightarrow\\quad x = 5.\n   \\]\n\n\\[\n\\boxed{x = 5}\n\\]",
      "model": "groq:openai/gpt-oss-120b",
-     "latency_ms": 1503,
-     "first_token_ms": 1202,
+     "latency_ms": 1560,
+     "first_token_ms": 1254,
      "tokens_in": 83,
-     "tokens_out": 187,
+     "tokens_out": 188,
      "route": null,
      "stopped": 0,
-     "created_at": 1793360028.9972382
+     "created_at": 1793363865.6849205
     }
    ]
   },
   {
-   "id": "b1d36931e021",
-   "title": "Write a Python function that checks if a number is prime",
-   "created_at": 1793360034.081999,
-   "updated_at": 1793360044.7424116,
+   "id": "698452f5338b",
+   "title": "Write a Python function that checks if a number is prime.",
+   "created_at": 1793363845.5408998,
+   "updated_at": 1793363858.7742476,
    "messages": [
     {
-     "id": 37,
-     "conversation_id": "b1d36931e021",
+     "id": 12,
+     "conversation_id": "698452f5338b",
      "role": "user",
-     "content": "Write a Python function that checks if a number is prime",
+     "content": "Write a Python function that checks if a number is prime.",
      "model": null,
      "latency_ms": null,
      "first_token_ms": null,
@@ -557,127 +605,82 @@
       "overridden": false
      },
      "stopped": 0,
-     "created_at": 1793360034.0886853
+     "created_at": 1793363845.548977
     },
     {
-     "id": 38,
-     "conversation_id": "b1d36931e021",
+     "id": 13,
+     "conversation_id": "698452f5338b",
      "role": "assistant",
-     "content": "Here is an efficient Python function to check if a number is prime:\n\n```python\ndef is_prime(n):\n    \"\"\"Check if a number is prime using the 6k +/- 1 optimization.\"\"\"\n    # 1 and numbers less than 1 are not prime\n    if n <= 1:\n        return False\n\n    # 2 and 3 are prime numbers\n    if n <= 3:\n        return True\n\n    # Eliminate even numbers and multiples of 3\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n\n    # All other primes are of the form 6k +/- 1.\n    # We only need to check factors up to the square root of n.\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n\n",
+     "content": "Here is an efficient Python function to check if a number is prime:\n\n```python\ndef is_prime(n):\n    \"\"\"Check if a number is a prime number.\"\"\"\n    # Numbers less than or equal to 1 are not prime\n    if n <= 1:\n        return False\n\n    # 2 and 3 are prime numbers\n    if n <= 3:\n        return True\n\n    # Eliminate even numbers and multiples of 3\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n\n    # Check factors up to the square root of n\n    # All primes greater than 3 can be written in the form 6k ± 1\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n\n    return True\n\n\n# --- Example Usage ---\nnumbers_to_test = [-5, 0, 1, 2, 4, 17, 27, 97]\n\nfor num in numbers_to_test:\n    print(f\"{num} is prime: {is_prime(num)}\")\n```\n\n### Output:\n```text\n-5 is prime: False\n0 is prime: False\n1 is prime: False\n2 is prime: True\n4 is prime: False\n17 is prime: True\n27 is prime: False\n97 is prime: True\n```\n\n### Why this approach is efficient:\n1. **Edge Case Handling:** It immediately rules out numbers $\\le 1$, and handles $2$ and $3$ directly.\n2. **Early Exit:** It quickly rejects even numbers and multiples of 3 using simple modulo operations (`n % 2` and `n % 3`).\n3. **Square Root Limit ($\\sqrt{n}$):** Instead of checking numbers all the way up to $n-1$, it stops at $\\sqrt{n}$. If a number has a factor larger than its square root, it must also have a matching factor smaller than its square root.\n4. **Step of 6 ($6k \\pm 1$ optimization):** All prime numbers greater than 3 take the form $6k \\pm 1$. By incrementing by 6 in each loop iteration, we skip multiples of 2 and 3, doing only about **1/3 of the work** compared to a basic loop.",
      "model": "gemini:gemini-3.5-flash",
-     "latency_ms": 10643,
-     "first_token_ms": 8695,
-     "tokens_in": null,
-     "tokens_out": null,
+     "latency_ms": 13216,
+     "first_token_ms": 7505,
+     "tokens_in": 13,
+     "tokens_out": 542,
      "route": null,
-     "stopped": 1,
-     "created_at": 1793360044.7414122
+     "stopped": 0,
+     "created_at": 1793363858.7722466
     }
    ]
   },
   {
-   "id": "6037c3986f6e",
-   "title": "Write a short poem about the monsoon",
-   "created_at": 1793360049.938419,
-   "updated_at": 1793360058.04269,
+   "id": "1b16e2239310",
+   "title": "Compare SQLite and PostgreSQL for a small side project, step",
+   "created_at": 1793363821.457801,
+   "updated_at": 1793363829.0522685,
    "messages": [
     {
-     "id": 39,
-     "conversation_id": "6037c3986f6e",
+     "id": 9,
+     "conversation_id": "1b16e2239310",
      "role": "user",
-     "content": "Write a short poem about the monsoon",
+     "content": "Compare SQLite and PostgreSQL for a small side project, step by step.",
      "model": null,
      "latency_ms": null,
      "first_token_ms": null,
      "tokens_in": null,
      "tokens_out": null,
      "route": {
-      "label": "Creative writing",
-      "category": "creative",
-      "reason": "Creative writing: Claude is often preferred for natural-sounding prose.",
-      "note": "Claude Sonnet 5.5 would be first choice but isn't configured.",
+      "label": "Long reasoning",
+      "category": "reasoning",
+      "reason": "Long reasoning: a larger reasoning model is worth the extra wait for multi-step thinking.",
+      "note": "GPT-5 would be first choice but isn't configured.",
       "signals": [
-       "poem",
-       "write a",
-       "pattern ^\\s*(write|compose|draft|imagine)\\b"
+       "step by step",
+       "compare"
       ],
-      "model": "gemini:gemini-3.5-flash",
+      "model": "groq:openai/gpt-oss-120b",
       "overridden": false
      },
      "stopped": 0,
-     "created_at": 1793360049.9455862
+     "created_at": 1793363821.465268
     },
     {
-     "id": 40,
-     "conversation_id": "6037c3986f6e",
+     "id": 10,
+     "conversation_id": "1b16e2239310",
      "role": "assistant",
-     "content": "Dark velvet clouds sweep from the sea,\nTo break the summer’s tyranny.\nFirst comes the breeze, a petrichor sigh,\nThen silver arrows pierce the sky.\n\nA rhythmic drum on leaf and tile,\nAs muddy rivers stretch a mile.\nThe parched earth drinks, the forests leap—\nThe monsoon wakes the world from sleep.",
-     "model": "gemini:gemini-3.5-flash",
-     "latency_ms": 8088,
-     "first_token_ms": 7136,
-     "tokens_in": 8,
-     "tokens_out": 74,
+     "content": "Below is a **step‑by‑step checklist** you can run through to decide whether **SQLite** or **PostgreSQL** is the better fit for a small side‑project.  \nAt the end of each step you’ll see a quick “good‑fit” rating for each engine (✓ = strong, – = acceptable, ✗ = potential pain point).\n\n---\n\n## 1. Define the Project Scope & Constraints  \n\n| Question | Why it matters | Typical SQLite answer | Typical PostgreSQL answer |\n|----------|----------------|----------------------|--------------------------|\n| **Data volume** (rows, GB) | Storage engines behave differently when the DB grows. | ✓ up to a few hundred MB – 1 GB is still fine. | ✓ any size (TB‑scale) – no hard limit. |\n| **Concurrent users** (read/write) | Concurrency model (locking vs MVCC) impacts performance. | – good for a handful of simultaneous connections (1‑10). | ✓ handles dozens‑hundreds of concurrent sessions easily. |\n| **Deployment environment** (desktop, mobile, serverless, cloud VM, container) | Some engines need a running server process. | ✓ pure file‑based – just copy the .sqlite file. | – needs a server process (systemd, Docker, cloud‑managed). |\n| **Setup/ops budget** (time, ops expertise) | How much effort you can spend on install, upgrades, backups. | ✓ zero‑install, no admin needed. | – requires DB admin tasks (tuning, backups, upgrades). |\n| **Feature requirements** (full‑text search, GIS, JSON, stored procedures) | Advanced features may be non‑negotiable. | – limited: FTS5, JSON1, but no stored procedures, no GIS. | ✓ rich ecosystem: PostGIS, PL/pgSQL, JSONB, full‑text, logical replication, etc. |\n| **Future growth** (plan to turn it into a product?) | You might outgrow the initial choice. | – easy to start, but migration later can be non‑trivial. | ✓ designed for production‑grade scaling. |\n| **Licensing & cost** | Some environments have strict licensing rules. | ✓ public domain (no restrictions). | ✓ PostgreSQL is open‑source (PostgreSQL License). |\n\n**Quick take‑away:**  \nIf your side‑project is a *single‑user* or *light‑weight* tool that lives on a laptop, a phone, or a simple web service with <10 concurrent users, SQLite is usually the path of least resistance.  \nIf you anticipate *multiple users*, need *advanced SQL features*, or want to “future‑proof” the data layer, PostgreSQL is the safer bet.\n\n---\n\n## 2. Compare Installation & Configuration  \n\n| Step | SQLite | PostgreSQL |\n|------|--------|------------|\n| **Install** | No installation – the library is bundled with most languages (Python `sqlite3`, Go `modernc.org/sqlite`, Node `better-sqlite3`, etc.). | Install the server (`apt install postgresql`, `brew install postgresql`, Docker image, cloud managed service). |\n| **Configuration files** | None (except optional pragmas you set via SQL). | `postgresql.conf`, `pg_hba.conf` – you may need to tune memory, connection limits, authentication. |\n| **Start/stop** | Implicit – DB is opened when your app opens the file. | Explicit – `systemctl start postgresql`, `docker run ...`, or use managed service console. |\n| **Portability** | DB file can be moved, copied, version‑controlled (binary diff). | Logical backups (`pg_dump`) needed; physical files are not portable across OS/versions without dump/restore. |\n| **Setup time** | < 5 minutes (or 0). | 10‑30 minutes for a local dev instance; longer for production (security, backups). |\n\n**Decision tip:** If you want *zero‑ops* and can keep the DB file with the code repository, SQLite wins.\n\n---\n\n## 3. Evaluate Data Modeling & SQL Feature Set  \n\n| Feature | SQLite | PostgreSQL |\n|---------|--------|------------|\n| **SQL compliance** | Mostly 3‑level SQL92 + many extensions; some quirks (e.g., type affinity). | Very high compliance – supports most of SQL:2016 features. |\n| **Data types** | Dynamic typing; `INTEGER`, `TEXT`, `BLOB`, `REAL`, `NUMERIC` + type affinity. | Strong static types, rich set (`INTEGER`, `BIGINT`, `NUMERIC`, `UUID`, `JSONB`, `INET`, arrays, ranges, etc.). |\n| **Indexes** | B‑tree, partial indexes, expression indexes (since 3.9), FTS5, R*Tree. | B‑tree, GiST, GIN, SP‑GiST, BRIN, expression indexes, partial indexes, full‑text, etc. |\n| **Constraints** | Primary key, UNIQUE, NOT NULL, CHECK (limited), FOREIGN KEY (enforced if `PRAGMA foreign_keys=ON`). | Full constraint suite, deferrable constraints, exclusion constraints, triggers, advanced check expressions. |\n| **Transactions** | ACID, but write concurrency is limited to a single writer (database‑level lock). | MVCC – true concurrent reads/writes, snapshot isolation, SERIALIZABLE isolation level. |\n| **Procedural code** | No stored procedures; can use user‑defined functions written in C/JS/Rust, but not SQL‑based. | PL/pgSQL, PL/Python, PL/Perl, etc. – powerful server‑side logic. |\n| **JSON handling** | `JSON1` extension (basic functions). | `JSONB` (binary, indexed, full‑text search, GIN indexes). |\n| **Geospatial** | No native support (requires external libs). | PostGIS – industry‑standard GIS, spatial indexes, functions. |\n| **Full‑text search** | FTS5 (good for small‑to‑medium docs). | Built‑in `tsvector`/`tsquery` plus GIN/GiST indexes; also `pg_trgm`. |\n| **Replication / High‑availability** | None (except file‑level copy). | Streaming replication, logical replication, failover, Patroni, etc. |\n\n**Decision tip:** If you need *anything beyond basic CRUD*—JSON queries, stored procedures, GIS, sophisticated constraints—PostgreSQL is the clear winner.\n\n---\n\n## 4. Performance & Scaling  \n\n| Scenario | SQLite | PostgreSQL |\n|----------|--------|------------|\n| **Read‑heavy (single‑user)** | Very fast – the entire DB often fits in OS cache; no network latency. | Fast, but incurs client‑server round‑trip; still excellent. |\n| **Write‑heavy (single writer)** | Write lock can become a bottleneck if > ~50 writes/s; still fine for many side‑projects. | True concurrent writers; can handle thousands of writes/s on modest hardware. |\n| **Batch import / bulk load** | `INSERT …;` inside a transaction is fast; `PRAGMA journal_mode=WAL` helps. | `COPY` command is the fastest; parallel workers possible. |\n| **Complex queries (joins, window functions)** | Works, but planner is simpler; may be slower on large tables. | Advanced optimizer, parallel query execution, better statistics. |\n| **Memory usage** | Entire DB may be memory‑mapped; low overhead (few MB). | Server process uses shared buffers, work_mem, maintenance_work_mem – can be tuned; larger baseline footprint. |\n| **Horizontal scaling** | Not applicable (single file). | Can shard (via FDW, Citus) or use read replicas. |\n| **Benchmark example** (10 M rows, simple SELECT by PK) | ~2‑3 ms per query on a laptop. | ~1‑2 ms on a modest VM (plus network latency). |\n\n**Decision tip:** For a *tiny* data set and *few* concurrent writes, SQLite is often **as fast or faster** because there’s no networking overhead. If you anticipate *high write throughput* or *complex analytics*, PostgreSQL will scale better.\n\n---\n\n## 5. Concurrency & Locking Model  \n\n| Model | SQLite | PostgreSQL |\n|-------|--------|------------|\n| **Lock granularity** | Database‑wide write lock (or page‑level lock in WAL). | Row‑level MVCC, no writer blocking readers. |\n| **Typical concurrent users** | 1 writer + many readers → fine. 2+ simultaneous writers → contention. | Hundreds of simultaneous readers & writers without blocking. |\n| **Deadlock handling** | Rare (since only one writer). | Full deadlock detection; can set lock timeout. |\n| **Isolation levels** | `DEFERRED`, `IMMEDIATE`, `EXCLUSIVE`; default is `SERIALIZABLE` (but only one writer). | `READ COMMITTED`, `REPEATABLE READ`, `SERIALIZABLE`. |\n\n**Decision tip:** If your side‑project may have *multiple background workers* writing at the same time (e.g., a scraper + a web API), PostgreSQL’s MVCC gives you peace of mind.\n\n---\n\n## 6. Backup, Migration & Portability  \n\n| Task | SQLite | PostgreSQL |\n|------|--------|------------|\n| **Backup** | Copy the `.sqlite` file (after `PRAGMA wal_checkpoint;` if using WAL). | `pg_dump` (logical) or `pg_basebackup`/file system snapshot (physical). |\n| **Restore** | Replace the file. | `psql < dump.sql` (logical) or restore physical backup. |\n| **Schema migrations** | Simple `ALTER TABLE` works, but some ops (column reorder, drop column) need table rebuild. | Full ALTER support; tools like `pgmig`, `Flyway`, `Liquibase` work out‑of‑the‑box. |\n| **Version upgrades** | Very stable API; rarely breaking changes. | Minor version upgrades usually painless; major upgrades may need `pg_upgrade`. |\n| **Portability across OS** | Binary file works on any OS with same endianness (generally cross‑platform). | Dump/restore required for cross‑OS moves. |\n\n**Decision tip:** If you want *instant, file‑level backups* (e.g., commit the DB to Git), SQLite wins. For *point‑in‑time recovery* and *large data sets*, PostgreSQL is more robust.\n\n---\n\n## 7. Ecosystem & Tooling  \n\n| Area | SQLite | PostgreSQL |\n|------|--------|------------|\n| **Language bindings** | Built‑in to Python, Go, Node, Ruby, Rust, .NET, Java (via JDBC), etc. | Drivers for every major language (`psycopg2`, `pgx`, `node-postgres`, `Npgsql`, JDBC, ODBC). |\n| **Admin UI** | DB Browser for SQLite, SQLiteStudio (lightweight). | pgAdmin, DBeaver, TablePlus, DataGrip, psql CLI, many cloud consoles. |\n| **ORM support** | All major ORMs support SQLite (SQLAlchemy, Prisma, TypeORM, Prisma, Entity Framework Core, Django ORM). | Same ORMs support PostgreSQL, often with richer features (JSONB mapping, array types). |\n| **Testing** | In‑memory mode (`:memory:`) makes fast unit tests. | Can run a lightweight Docker container for CI; also `pg_tmp` for temporary instances. |\n| **Community** | Small but active; excellent docs, Stack Overflow coverage. | Large global community, extensive docs, many extensions (PostGIS, pg_partman, pgcrypto). |\n| **Managed services** | None (except “SQLite on the web” like sql.js). | AWS RDS, Azure Database for PostgreSQL, GCP CloudSQL, Supabase, Neon, etc. |\n\n**Decision tip:** If you need a *quick, in‑memory test DB* for unit tests, SQLite shines. If you already use a managed PostgreSQL service for other projects, sticking with it simplifies ops.\n\n---\n\n## 8. Cost & Licensing  \n\n| Aspect | SQLite | PostgreSQL |\n|--------|--------|------------|\n| **License** | Public domain – no attribution required. | PostgreSQL License (BSD‑style) – permissive, no royalties. |\n| **Running cost** | Zero – just the file. | Server cost (VM, container, or managed service). For a hobby project on a cheap VPS or free tier, still cheap (< $5/mo). |\n| **Development cost** | Minimal – no DBA time. | Slightly higher – you’ll spend some time on config, backups, monitoring. |\n\n**Decision tip:** If the budget is *strictly zero* (e.g., a personal script that must run on any computer), SQLite is the only choice.\n\n---\n\n## 9. Decision Matrix (quick visual)\n\n| Criterion | SQLite | PostgreSQL |\n|-----------|--------|------------|\n| **Setup simplicity** | ★★★★★ | ★★☆☆☆ |\n| **Zero‑ops / embedded** | ★★★★★ | ★☆☆☆☆ |\n| **Concurrent writers** | ★★☆☆☆ | ★★★★★ |\n| **Advanced SQL (JSONB, GIS, stored procs)** | ★★☆☆☆ | ★★★★★ |\n| **Scalability (GB‑TB, users)** | ★★☆☆☆ | ★★★★★ |\n| **Backup & restore** | ★★★★★ (file copy) | ★★★★☆ (pg_dump) |\n| **Community / extensions** | ★★★☆☆ | ★★★★★ |\n| **Cost (run‑time)** | ★★★★★ (free) | ★★★★☆ (cheap, but not free) |\n| **Best for** |",
+     "model": "groq:openai/gpt-oss-120b",
+     "latency_ms": 7576,
+     "first_token_ms": 1371,
+     "tokens_in": 86,
+     "tokens_out": 3072,
      "route": null,
      "stopped": 0,
-     "created_at": 1793360058.0416775
+     "created_at": 1793363829.0497522
     }
    ]
   },
   {
-   "id": "51af5c95eb7e",
-   "title": "reasons for diabetes",
-   "created_at": 1793360063.1827698,
-   "updated_at": 1793360077.7364564,
+   "id": "5e8ca0176517",
+   "title": "Keep this private: help me write a short, polite message ask",
+   "created_at": 1793363805.8672888,
+   "updated_at": 1793363816.0822806,
    "messages": [
     {
-     "id": 41,
-     "conversation_id": "51af5c95eb7e",
+     "id": 7,
+     "conversation_id": "5e8ca0176517",
      "role": "user",
-     "content": "reasons for diabetes",
-     "model": null,
-     "latency_ms": null,
-     "first_token_ms": null,
-     "tokens_in": null,
-     "tokens_out": null,
-     "route": {
-      "label": "General chat",
-      "category": "general",
-      "reason": "General chat: a fast all-rounder fits.",
-      "note": "",
-      "signals": [],
-      "model": "gemini:gemini-3.5-flash",
-      "overridden": false
-     },
-     "stopped": 0,
-     "created_at": 1793360063.1900344
-    },
-    {
-     "id": 42,
-     "conversation_id": "51af5c95eb7e",
-     "role": "assistant",
-     "content": "Diabetes is a chronic health condition that affects how your body turns food into energy. It occurs when blood sugar (glucose) levels become too high. \n\nThe causes of diabetes depend on the **type** of diabetes, as the underlying mechanisms are very different. Here is a detailed breakdown of the reasons why diabetes develops, categorized by type.\n\n---\n\n### 1. Reasons for Type 1 Diabetes (Autoimmune Condition)\nIn Type 1 diabetes, the body’s immune system mistakenly attacks and destroys the insulin-producing beta cells in the pancreas. Without insulin, sugar cannot enter cells and builds up in the bloodstream.\n\n* **Genetics:** Having a parent or sibling with Type 1 diabetes increases your risk. Certain inherited genes make people more susceptible.\n* **Environmental Triggers:** Exposure to certain viral infections (such as enteroviruses or mumps) may trigger the autoimmune response in genetically susceptible people.\n* **Geography:** People living in colder climates or farther from the equator have higher rates of Type 1 diabetes, though the exact reason is still being researched.\n\n*Note: Type 1 diabetes is **not** caused by diet, weight, or lifestyle factors.*\n\n---\n\n### 2. Reasons for Type 2 Diabetes (Insulin Resistance)\nType 2 diabetes is the most common form (accounting for about 90–95% of cases). It occurs when the body’s cells become resistant to insulin, and the pancreas cannot produce enough extra insulin to compensate.\n\nThe main causes and risk factors include:\n\n* **Overweight and Obesity:** Extra fat tissue—especially visceral fat around the abdomen—causes chronic inflammation and makes cells more resistant to insulin.\n* **Physical Inactivity:** Physical activity helps muscle cells use glucose for energy and increases insulin sensitivity. Inactivity leads to higher blood sugar levels.\n* **Genetics and Family History:** Type 2 diabetes has a strong genetic link. If a parent or sibling has it, your risk is significantly higher.\n* **Poor Diet:** High intake of sugar-sweetened beverages, refined carbohydrates, ultra-processed foods, and saturated fats contributes to weight gain and insulin resistance.\n* **Age:** Risk increases as you get older, particularly after age 45, often due to decreased muscle mass and lower activity levels (though rates are rising in younger people).\n* **Ethnicity:** People of certain backgrounds—including African, Hispanic, Asian, Indigenous, and Pacific Islander descent—are at higher risk due to a combination of genetic and socio-economic factors.\n* **Polycystic Ovary Syndrome (PCOS):** A hormonal disorder in women that is strongly linked to insulin resistance.\n* **High Blood Pressure and High Cholesterol:** These conditions often co-occur with insulin resistance as part of \"metabolic syndrome.\"\n\n---\n\n### 3. Reasons for Gestational Diabetes (Pregnancy-Related)\nGestational diabetes occurs during pregnancy in women who have never had diabetes before. \n\n* **Hormonal Changes:** During pregnancy, the placenta produces hormones that help the baby grow. However, these hormones also make the mother's body cells more resistant to insulin. Normally, the pancreas produces more insulin to compensate, but if it can't keep up, blood sugar rises.\n* **Risk Factors:** Being overweight before pregnancy, having prediabetes, having a family history of Type 2 diabetes, or being over age 25.\n\n---\n\n### 4. Other Specific Causes of Diabetes (Secondary Diabetes)\nIn less common cases, diabetes can be triggered by specific medical conditions, injuries, or medications:\n\n* **Pancreatic Damage or Disease:** Conditions like pancreatitis, pancreatic cancer, trauma, or cystic fibrosis can damage the pancreas, reducing its ability to make insulin.\n* **Hormonal Disorders:** Conditions that cause the body to overproduce certain hormones (like Cushing’s syndrome, which increases cortisol, or Acromegaly, which increases growth hormone) can lead to insulin resistance.\n* **Medications:** Long-term use of certain drugs can impair insulin secretion or action. These include:\n  * Corticosteroids (e.g., prednisone)\n  * Certain anti-psychotic medications\n  * Some high blood pressure treatments (like thiazide diuretics)\n* **Monogenic Diabetes:** Rare genetic mutations that affect insulin production (such as MODY—Maturity-Onset Diabetes of the Young).\n\n---\n\n### Summary\n* **Type 1** is caused by an **autoimmune destruction** of insulin-producing cells (genetics + triggers).\n* **Type 2** is caused by **insulin resistance** driven by a combination of genetics, lifestyle, weight, and age.\n* **Gestational** is caused by **pregnancy hormones** blocking insulin action.",
-     "model": "gemini:gemini-3.5-flash",
-     "latency_ms": 14537,
-     "first_token_ms": 9475,
-     "tokens_in": 5,
-     "tokens_out": 988,
-     "route": null,
-     "stopped": 0,
-     "created_at": 1793360077.7353935
-    }
-   ]
-  },
-  {
-   "id": "1898b9f6d75b",
-   "title": "Keep this private: I have a doctor's appointment about my bl",
-   "created_at": 1793362642.958147,
-   "updated_at": 1793362656.253809,
-   "messages": [
-    {
-     "id": 51,
-     "conversation_id": "1898b9f6d75b",
-     "role": "user",
-     "content": "Keep this private: I have a doctor's appointment about my blood pressure next week. What 3 questions should I ask?",
+     "content": "Keep this private: help me write a short, polite message asking my landlord to fix a leaking tap.",
      "model": null,
      "latency_ms": null,
      "first_token_ms": null,
@@ -695,35 +698,35 @@
       "overridden": false
      },
      "stopped": 0,
-     "created_at": 1793362642.965034
+     "created_at": 1793363805.8756318
     },
     {
-     "id": 52,
-     "conversation_id": "1898b9f6d75b",
+     "id": 8,
+     "conversation_id": "5e8ca0176517",
      "role": "assistant",
-     "content": "I'm glad you're taking care of your health! Don't worry, your appointment is private. Here are three questions you may want to consider asking your doctor during your blood pressure check-up:\n\n1. **What are my target blood pressure goals, and how do I know if I'm on track?**\n\nThis question will help you understand what your doctor considers a healthy blood pressure range for you, and whether you're meeting your goals. You'll want to know what your target range is and how often you'll need to check your blood pressure at home.\n\n2. **Are there any lifestyle changes or habits that I can adopt to help lower my blood pressure?**\n\nThis question will help you understand any lifestyle modifications your doctor recommends to help manage your blood pressure. It might include changes to your diet, exercise routine, stress levels, or sleep habits. By making these changes, you can take a more active role in managing your health.\n\n3. **Are there any additional tests or monitoring I need to do to track my blood pressure, and how often should I do them?**\n\nThis question will help you understand any additional testing or monitoring your doctor recommends to track your blood pressure over time. You'll want to know what tests to expect, how often to have them done, and what the results mean for your health.\n\nRemember, these questions are just a starting point. Feel free to ask your doctor any other questions or concerns you may have about your blood pressure or overall health.",
+     "content": "Here's a sample message you can use:\n\n\"Hi [Landlord's Name],\n\nI hope this message finds you well. I wanted to bring to your attention a minor issue with the [tap/kitchen sink] in my rental unit. The [tap] has developed a small leak and I was wondering if it would be possible to arrange for it to be fixed at your earliest convenience.\n\nI've attached a photo of the issue for your reference. Please let me know if there's any additional information I can provide or if you'd like to schedule a time for the repair.\n\nThank you for your prompt attention to this matter. I appreciate your help in keeping my unit in good condition.\n\nBest regards,\n[Your Name]\"\n\nPlease feel free to customize it as needed, and don't hesitate to reach out if you need any further assistance!",
      "model": "ollama:llama3.2:3b",
-     "latency_ms": 13171,
-     "first_token_ms": 6288,
-     "tokens_in": 50,
-     "tokens_out": 298,
+     "latency_ms": 10196,
+     "first_token_ms": 6183,
+     "tokens_in": 46,
+     "tokens_out": 170,
      "route": null,
      "stopped": 0,
-     "created_at": 1793362656.2521317
+     "created_at": 1793363816.080658
     }
    ]
   },
   {
-   "id": "ae210895697d",
-   "title": "My name is Omkar and I live in Mumbai. Reply in one short se",
-   "created_at": 1793351814.9887755,
-   "updated_at": 1793351835.3404715,
+   "id": "705c086a68dc",
+   "title": "Give me one fun fact about octopuses in two sentences.",
+   "created_at": 1793363766.835985,
+   "updated_at": 1793363798.0604794,
    "messages": [
     {
-     "id": 27,
-     "conversation_id": "ae210895697d",
+     "id": 1,
+     "conversation_id": "705c086a68dc",
      "role": "user",
-     "content": "My name is Omkar and I live in Mumbai. Reply in one short sentence.",
+     "content": "Give me one fun fact about octopuses in two sentences.",
      "model": null,
      "latency_ms": null,
      "first_token_ms": null,
@@ -731,27 +734,27 @@
      "tokens_out": null,
      "route": null,
      "stopped": 0,
-     "created_at": 1793351814.9954035
+     "created_at": 1793363766.8433633
     },
     {
-     "id": 28,
-     "conversation_id": "ae210895697d",
+     "id": 2,
+     "conversation_id": "705c086a68dc",
      "role": "assistant",
-     "content": "Nice to meet you, Omkar from Mumbai!",
+     "content": "Octopuses have three hearts, nine brains, and blue blood. Two-thirds of their neurons are actually located in their arms, allowing each tentacle to figure out how to open a shell or explore a crevice independently!",
      "model": "gemini:gemini-3.5-flash",
-     "latency_ms": 6053,
-     "first_token_ms": 6037,
-     "tokens_in": 18,
-     "tokens_out": 10,
+     "latency_ms": 8854,
+     "first_token_ms": 8845,
+     "tokens_in": 14,
+     "tokens_out": 46,
      "route": null,
      "stopped": 0,
-     "created_at": 1793351821.0553627
+     "created_at": 1793363775.7057903
     },
     {
-     "id": 29,
-     "conversation_id": "ae210895697d",
+     "id": 3,
+     "conversation_id": "705c086a68dc",
      "role": "user",
-     "content": "Which city do I live in? One word.",
+     "content": "Explain that fact in simpler words for a 10-year-old.",
      "model": null,
      "latency_ms": null,
      "first_token_ms": null,
@@ -759,49 +762,49 @@
      "tokens_out": null,
      "route": null,
      "stopped": 0,
-     "created_at": 1793351826.0883942
+     "created_at": 1793363775.8667397
     },
     {
-     "id": 30,
-     "conversation_id": "ae210895697d",
+     "id": 4,
+     "conversation_id": "705c086a68dc",
      "role": "assistant",
-     "content": "Mumbai.",
+     "content": "Think of an octopus as having a superpower: its arms are like smart friends that can think on their own! Because most of its \"brain\" power is in its 8 arms (not just its head), each arm can solve problems, like opening a snack, by itself while the other arms are doing something different.",
+     "model": "groq:qwen/qwen3.8-27b",
+     "latency_ms": 1575,
+     "first_token_ms": 1448,
+     "tokens_in": 99,
+     "tokens_out": 67,
+     "route": null,
+     "stopped": 0,
+     "created_at": 1793363777.451671
+    },
+    {
+     "id": 5,
+     "conversation_id": "705c086a68dc",
+     "role": "user",
+     "content": "Now turn it into a two-line rhyme.",
+     "model": null,
+     "latency_ms": null,
+     "first_token_ms": null,
+     "tokens_in": null,
+     "tokens_out": null,
+     "route": null,
+     "stopped": 0,
+     "created_at": 1793363779.9298666
+    },
+    {
+     "id": 6,
+     "conversation_id": "705c086a68dc",
+     "role": "assistant",
+     "content": "Eight arms of an octopus so fine,\nAre like little brains, all thinking at the same time!",
      "model": "ollama:llama3.2:3b",
-     "latency_ms": 6223,
-     "first_token_ms": 6127,
-     "tokens_in": 72,
-     "tokens_out": 4,
+     "latency_ms": 18111,
+     "first_token_ms": 17615,
+     "tokens_in": 192,
+     "tokens_out": 22,
      "route": null,
      "stopped": 0,
-     "created_at": 1793351832.3180306
-    },
-    {
-     "id": 31,
-     "conversation_id": "ae210895697d",
-     "role": "user",
-     "content": "What is my name, spelled backwards?",
-     "model": null,
-     "latency_ms": null,
-     "first_token_ms": null,
-     "tokens_in": null,
-     "tokens_out": null,
-     "route": null,
-     "stopped": 0,
-     "created_at": 1793351832.7456627
-    },
-    {
-     "id": 32,
-     "conversation_id": "ae210895697d",
-     "role": "assistant",
-     "content": "rakmO",
-     "model": "gemini:gemini-3.5-flash-lite",
-     "latency_ms": 2586,
-     "first_token_ms": 2504,
-     "tokens_in": 52,
-     "tokens_out": 3,
-     "route": null,
-     "stopped": 0,
-     "created_at": 1793351835.3394716
+     "created_at": 1793363798.0582561
     }
    ]
   }
