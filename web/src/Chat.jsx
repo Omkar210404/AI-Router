@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { api } from './api.js'
+import { REPO_URL } from './demo.js'
 import { Icon, Markdown, ModelBadge, ProviderMark, TierTag, fmtMs } from './ui.jsx'
 
 const SUGGESTIONS = [
@@ -98,7 +99,15 @@ function Message({ m, route, models, onRetry }) {
         {tier === 'paid' && <TierTag tier="paid" />}
       </div>
       {why && route && <RouteWhy route={route} />}
-      {m.content ? <Markdown text={m.content} /> : !m.error && <div className="typing"><i /><i /><i /></div>}
+      {m.demo && (
+        <div className="demo-card">
+          This is the static demo on GitHub Pages, so no AI is called here. In the real app,{' '}
+          <strong>{models.find((x) => x.id === m.model)?.label || m.model}</strong> would stream its answer now.
+          To chat for real, run AIRouter on your computer with a free Gemini or Groq key (steps in the{' '}
+          <a href={REPO_URL} target="_blank" rel="noreferrer">README</a>).
+        </div>
+      )}
+      {m.content ? <Markdown text={m.content} /> : !m.error && !m.demo && <div className="typing"><i /><i /><i /></div>}
       {m.streaming && m.content && <span className="caret" />}
       {m.error && (
         <div className="error-card">
