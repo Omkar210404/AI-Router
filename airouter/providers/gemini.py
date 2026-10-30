@@ -22,7 +22,8 @@ class GeminiProvider(Provider):
             for m in messages
         ]
         usage = None
-        for chunk in self._client().models.generate_content_stream(model=model, contents=contents):
+        client = self._client()  # keep a reference: the SDK closes its HTTP client when this is freed
+        for chunk in client.models.generate_content_stream(model=model, contents=contents):
             if chunk.text:
                 yield {"type": "token", "text": chunk.text}
             if chunk.usage_metadata:
@@ -32,4 +33,5 @@ class GeminiProvider(Provider):
                    "output": usage.candidates_token_count or 0}
 
     def list_models(self):
-        return [m.name.removeprefix("models/") for m in self._client().models.list()]
+        client = self._client()
+        return [m.name.removeprefix("models/") for m in client.models.list()]
