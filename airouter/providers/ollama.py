@@ -1,5 +1,6 @@
 """Local models via the official ollama Python library. Free and offline."""
 import os
+import time
 
 from .base import Provider
 
@@ -10,16 +11,27 @@ class OllamaProvider(Provider):
     tier = "local"
     note = "Runs on your machine. Free, works offline, speed depends on your hardware."
 
+    _cache: tuple[float, list[str] | None] = (0.0, None)
+
     def _client(self, timeout=None):
         from ollama import Client
-        return Client(host=os.getenv("OLLAMA_HOST", "http://localhost:11434"), timeout=timeout)
+        # 127.0.0.1, not localhost: on Windows "localhost" tries IPv6 first and adds ~2 s per call.
+        return Client(host=os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434"), timeout=timeout)
+
+    def _models(self) -> list[str] | None:
+        """Installed models, or None if Ollama isn't reachable. Cached for 15 s so
+        page loads don't wait on Ollama every time."""
+        at, models = self._cache
+        if time.time() - at > 15:
+            try:
+                models = [m.model for m in self._client(timeout=4).list().models]
+            except Exception:  # noqa: BLE001 - not running / not installed
+                models = None
+            self._cache = (time.time(), models)
+        return models
 
     def configured(self):
-        try:
-            self._client(timeout=1.5).list()
-            return True
-        except Exception:  # noqa: BLE001 - not running / not installed
-            return False
+        return self._models() is not None
 
     def missing_reason(self):
         return "Not running: install Ollama and run `ollama serve` (and `ollama pull <model>`)"
@@ -34,4 +46,7 @@ class OllamaProvider(Provider):
                        "output": part.eval_count or 0}
 
     def list_models(self):
-        return [m.model for m in self._client(timeout=3).list().models]
+        models = self._models()
+        if models is None:
+            raise ConnectionError("Ollama is not reachable")
+        return models
