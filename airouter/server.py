@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from . import config, db
 from .providers import PROVIDERS, NotConfigured, catalog, split_model_id
 from .providers.base import short_error
+from .router import route
 
 app = FastAPI(title="AIRouter")
 
@@ -58,6 +59,22 @@ def test_provider(name: str):
     if name not in PROVIDERS:
         raise HTTPException(404, "Unknown provider")
     return PROVIDERS[name].test()
+
+
+class RouteIn(BaseModel):
+    text: str
+
+
+@app.post("/api/route")
+def recommend(req: RouteIn):
+    return route(req.text, catalog())
+
+
+@app.get("/api/routing")
+def routing_table():
+    """The routing config as the router sees it, so the UI can show it."""
+    cfg = config.load_routing()
+    return {"file": str(config.ROUTING_FILE), "categories": cfg["categories"]}
 
 
 @app.get("/api/conversations")
