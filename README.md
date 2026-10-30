@@ -91,6 +91,8 @@ Open [routing.toml](routing.toml). For example, to send coding questions to a lo
 prefer = ["ollama:*coder*", "anthropic:claude-sonnet-5-5", "gemini:gemini-2.5-flash"]
 ```
 
+To keep an installed Ollama model out of the picker (without uninstalling it), add it to `hide` under `[ollama]` in the same file.
+
 The default preferences reflect common opinion about each model family, **not benchmarks I ran**. Change them to match your own experience.
 
 ## Limitations

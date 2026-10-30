@@ -22,8 +22,10 @@ def catalog() -> list[dict]:
     """Every model the app knows about, with a configured flag.
     Cloud models come from routing.toml; Ollama models are whatever is installed."""
     status = {name: p.configured() for name, p in PROVIDERS.items()}
+    routing = load_routing()
+    hidden = set(routing.get("ollama", {}).get("hide", []))
     out = []
-    for m in load_routing().get("models", []):
+    for m in routing.get("models", []):
         prov = m["id"].partition(":")[0]
         if prov in PROVIDERS:
             p = PROVIDERS[prov]
@@ -31,6 +33,8 @@ def catalog() -> list[dict]:
                         "tier": m.get("tier", p.tier), "configured": status[prov]})
     if status.get("ollama"):
         for name in PROVIDERS["ollama"].list_models():
+            if name in hidden:
+                continue
             out.append({"id": f"ollama:{name}", "label": name, "provider": "ollama",
                         "provider_label": PROVIDERS["ollama"].label, "tier": "local",
                         "speed": "local", "configured": True})

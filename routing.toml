@@ -2,6 +2,10 @@
 # Model ids are "<provider>:<model name as the provider's API expects it>".
 # Ollama models are not listed here: every model you have pulled shows up automatically.
 
+[ollama]
+# Installed Ollama models to leave out of the picker (they stay installed).
+hide = ["qwen2.5-coder:7b"]
+
 [[models]]
 id = "gemini:gemini-2.5-flash"
 label = "Gemini 2.5 Flash"
@@ -80,7 +84,7 @@ keyword_weight = 3
 pattern_weight = 4
 patterns = ['\d\s*[a-z]?\s*[-+*/^×÷=]\s*\d', '\d+(\.\d+)?\s*%', '\b[xyz]\s*[=^]', '\\(frac|int|sum)', '√|∫|∑|π']
 prefer = ["openai:gpt-5", "gemini:gemini-2.5-pro", "anthropic:claude-sonnet-5-5",
-  "gemini:gemini-2.5-flash", "ollama:*"]
+  "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Math: a model with strong step-by-step reasoning is the safer bet."
 
 [categories.creative]
@@ -89,7 +93,7 @@ keywords = ["poem", "story", "short story", "lyrics", "song", "haiku", "write a"
   "fiction", "character", "plot", "novel", "screenplay", "joke", "slogan", "tagline", "rhyme",
   "essay", "blog post", "toast", "speech"]
 patterns = ['^\s*(write|compose|draft|imagine)\b']
-prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-2.5-flash", "ollama:*"]
+prefer = ["anthropic:claude-sonnet-5-5", "openai:gpt-5", "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Creative writing: Claude is often preferred for natural-sounding prose."
 
 [categories.quick_fact]
@@ -101,7 +105,7 @@ pattern_weight = 1
 short_words = 12
 short_bonus = 1
 prefer = ["gemini:gemini-2.5-flash-lite", "gemini:gemini-2.5-flash", "anthropic:claude-haiku-5-5",
-  "openai:gpt-5-mini", "ollama:*"]
+  "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
 reason = "Quick fact: a fast, cheap model is enough. No need to wait for a big one."
 
 [categories.reasoning]
@@ -112,7 +116,7 @@ keywords = ["step by step", "compare", "trade-offs", "tradeoffs", "pros and cons
 long_words = 60
 long_bonus = 2
 prefer = ["gemini:gemini-2.5-pro", "openai:gpt-5", "anthropic:claude-sonnet-5-5",
-  "gemini:gemini-2.5-flash", "ollama:*"]
+  "gemini:gemini-2.5-flash", "ollama:llama*", "ollama:*"]
 reason = "Long reasoning: a larger model is worth the extra wait for multi-step thinking."
 
 [categories.vision]
@@ -126,5 +130,5 @@ reason = "Image question: needs a multimodal model. Note: AIRouter can't attach 
 [categories.general]
 label = "General chat"
 keywords = []
-prefer = ["gemini:gemini-2.5-flash", "anthropic:claude-haiku-5-5", "openai:gpt-5-mini", "ollama:*"]
+prefer = ["gemini:gemini-2.5-flash", "anthropic:claude-haiku-5-5", "openai:gpt-5-mini", "ollama:llama*", "ollama:*"]
 reason = "General chat: a fast all-rounder fits."
