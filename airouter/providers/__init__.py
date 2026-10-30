@@ -3,11 +3,12 @@ from ..config import load_routing
 from .anthropic import AnthropicProvider
 from .base import NotConfigured, Provider
 from .gemini import GeminiProvider
+from .groq import GroqProvider
 from .ollama import OllamaProvider
 from .openai import OpenAIProvider
 
 PROVIDERS: dict[str, Provider] = {
-    p.name: p for p in (GeminiProvider(), OllamaProvider(), OpenAIProvider(), AnthropicProvider())}
+    p.name: p for p in (GeminiProvider(), GroqProvider(), OllamaProvider(), OpenAIProvider(), AnthropicProvider())}
 
 
 def split_model_id(model_id: str) -> tuple[Provider, str]:
