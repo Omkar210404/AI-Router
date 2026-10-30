@@ -171,6 +171,14 @@ To keep an installed Ollama model out of the picker (without uninstalling it), a
 
 The default preferences reflect common opinion about each model family, **not benchmarks I ran**. Change them to match your own experience.
 
+## The GitHub Pages demo
+
+The live demo is the same React app built in a static "demo" mode (`npm run build:demo`), because GitHub Pages can't run the Python server or hold API keys:
+
+- The router runs in the browser ([web/src/router.js](web/src/router.js)), a JavaScript copy of `airouter/router.py` reading the same `routing.toml` rules. On 21 test questions both versions picked the same category and model.
+- The sidebar chats come from [web/src/demo-data.json](web/src/demo-data.json), written by `python -m airouter export-demo <conversation ids>` from real conversations. It contains no keys.
+- Sending a message shows which model *would* answer, instead of calling an AI.
+
 ## Limitations
 
 - The router is keyword/regex rules, not a trained model. It handles clear-cut messages well and gets mixed ones wrong (a message mentioning both "error" and "screenshot" depends on weights).
@@ -187,9 +195,11 @@ airouter/
   router.py        rule-based classifier + model pick
   server.py        FastAPI: models, providers, route, chat (SSE), history
   db.py            SQLite history
+  demo.py          export-demo: real chats -> web/src/demo-data.json
   selftest.py      offline checks (mock provider)
 routing.toml       model catalog + routing rules (edit me)
 web/src/           React UI: App, Chat, Settings, ui helpers, styles.css
+                   router.js + demo.js: static demo mode for GitHub Pages
 tests/             pytest
 ```
 
