@@ -49,19 +49,24 @@ def check_provider_interface():
 
 def check_unconfigured_is_honest():
     import os
-    key = os.environ.pop("GEMINI_API_KEY", None)
+    from .providers.base import NotConfigured
+    saved = {}
+    for name in ("gemini", "openai", "anthropic"):
+        p = PROVIDERS[name]
+        saved[p.key_env] = os.environ.pop(p.key_env, None)
     try:
-        status = PROVIDERS["gemini"].test()
-        assert not status["ok"] and "GEMINI_API_KEY" in status["detail"]
-        try:
-            next(PROVIDERS["gemini"].stream("gemini-2.5-flash", [{"role": "user", "content": "x"}]))
-            raise AssertionError("stream should refuse without a key")
-        except Exception as e:  # noqa: BLE001
-            assert type(e).__name__ == "NotConfigured"
+        for name in ("gemini", "openai", "anthropic"):
+            p = PROVIDERS[name]
+            status = p.test()
+            assert not status["ok"] and p.key_env in status["detail"], status
+            try:
+                next(p.stream("any-model", [{"role": "user", "content": "x"}]))
+                raise AssertionError(f"{name} answered without a key")
+            except NotConfigured:
+                pass
     finally:
-        if key:
-            os.environ["GEMINI_API_KEY"] = key
-    return "missing key -> 'not configured', no reply produced"
+        os.environ.update({k: v for k, v in saved.items() if v})
+    return "gemini/openai/anthropic without keys -> 'not configured', no reply produced"
 
 
 def check_history_and_switching(tmp: Path):
@@ -97,9 +102,52 @@ def check_history_and_switching(tmp: Path):
     return "2 turns saved, model b got model a's context, thread resumes from DB"
 
 
+ROUTER_CASES = [
+    ("Why does this print None?\n```python\ndef add(a, b):\n    print(a + b)\n```", "coding"),
+    ("Fix the TypeError in my React component when the array is empty", "coding"),
+    ("Write a Python function that checks if a string is a palindrome", "coding"),
+    ("What is the capital of Australia?", "quick_fact"),
+    ("Who was the first person on the moon?", "quick_fact"),
+    ("Solve 3x + 7 = 22 for x", "math"),
+    ("What is the probability of rolling two sixes with two dice?", "math"),
+    ("What is 15% of 240?", "math"),
+    ("Write a short poem about a city waking up in the rain.", "creative"),
+    ("Write a story about a dragon who is afraid of fire", "creative"),
+    ("Compare SQLite and PostgreSQL for a side project and recommend one, step by step.", "reasoning"),
+    ("Can you look at this screenshot and tell me what the error dialog says?", "vision"),
+    ("hey, how are you doing today", "general"),
+]
+
+FAKE_CATALOG = [  # configured flags chosen to exercise fallback
+    {"id": "anthropic:claude-sonnet-5-5", "label": "Claude Sonnet 5.5", "configured": False},
+    {"id": "gemini:gemini-2.5-flash-lite", "label": "Gemini 2.5 Flash-Lite", "configured": True},
+    {"id": "gemini:gemini-2.5-flash", "label": "Gemini 2.5 Flash", "configured": True},
+    {"id": "ollama:qwen2.5-coder:7b", "label": "qwen2.5-coder:7b", "configured": True},
+]
+
+
+def check_router():
+    from .router import route
+    wrong = []
+    for text, expected in ROUTER_CASES:
+        r = route(text, FAKE_CATALOG)
+        if r["category"] != expected:
+            wrong.append(f"{text[:40]!r} -> {r['category']} (expected {expected})")
+    assert not wrong, "; ".join(wrong)
+    code = route(ROUTER_CASES[0][0], FAKE_CATALOG)
+    assert code["model"] == "ollama:qwen2.5-coder:7b", code   # Claude not configured -> coder fallback
+    assert "Claude Sonnet 5.5" in code["note"] and code["reason"]
+    fact = route("What is the capital of Australia?", FAKE_CATALOG)
+    assert fact["model"] == "gemini:gemini-2.5-flash-lite"
+    none = route("hello", [{**m, "configured": False} for m in FAKE_CATALOG])
+    assert none["model"] is None
+    return f"{len(ROUTER_CASES)}/{len(ROUTER_CASES)} sample queries routed as expected; fallbacks explained"
+
+
 def run(extra_steps=()) -> int:
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as d:
         steps = [*extra_steps,
+                 ("router classifies sample queries", check_router),
                  ("provider interface (mock)", check_provider_interface),
                  ("unconfigured provider is honest", check_unconfigured_is_honest),
                  ("history save/resume + model switch", lambda: check_history_and_switching(Path(d)))]
