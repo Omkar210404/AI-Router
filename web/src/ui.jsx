@@ -2,6 +2,9 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 
 // Brand-neutral provider marks: a shape + colour per provider, no logos.
 const MARKS = {
@@ -67,12 +70,18 @@ function extractText(node) {
   return extractText(node.props?.children)
 }
 
+// Models write math as \( \) / \[ \] or $ / $$. remark-math only knows the dollar form.
+const mathDelims = (t) => t
+  .replace(/\\\[([\s\S]+?)\\\]/g, (_, m) => `$$${m}$$`)
+  .replace(/\\\(([\s\S]+?)\\\)/g, (_, m) => `$${m}$`)
+
 export function Markdown({ text }) {
   return (
     <div className="md">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+      <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex, [rehypeHighlight, { ignoreMissing: true }]]}
         components={{ pre: CodeBlock, a: (p) => <a {...p} target="_blank" rel="noreferrer" /> }}>
-        {text}
+        {mathDelims(text)}
       </ReactMarkdown>
     </div>
   )
