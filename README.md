@@ -10,7 +10,7 @@ A chat app that talks to each AI provider through its **own official API**, sugg
 - **Works for free.** Gemini's and Groq's free tiers and/or a local Ollama model are enough. Paid providers are optional.
 - **Private stays local.** Messages that mention things like bank details, salary, passwords or medical reports are routed to the local Ollama model, so they never leave your computer.
 
-![Routed coding answer](docs/routed.png)
+![Math question routed to GPT-OSS on Groq](docs/routed.png)
 
 ## Which AI does it pick?
 
@@ -43,7 +43,7 @@ How to read it:
 
 <img src="docs/mobile.png" width="260" alt="Narrow screen">
 
-All screenshots are of the real app. The switching example goes Gemini 3.5 Flash → local Llama 3.2 3B → Gemini 3.5 Flash-Lite in one thread; the other replies come from local Ollama models.
+All screenshots are of the real app. The switching example goes Gemini 3.5 Flash → Qwen on Groq → local Llama 3.2 3B in one thread, each model building on the previous answer.
 
 ## How it works
 
