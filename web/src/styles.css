@@ -146,6 +146,7 @@ main { min-width: 0; height: 100%; display: flex; flex-direction: column; }
 .suggestions button { min-width: 0; text-align: left; align-items: flex-start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; gap: 3px; transition: border-color .15s, transform .15s; }
 .suggestions button:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-1px); }
 .suggestions strong { font-size: 14px; }
+.suggestions strong, .suggestions span { max-width: 100%; }
 .suggestions span { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* composer */
