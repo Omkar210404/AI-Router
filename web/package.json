@@ -1,0 +1,21 @@
+{
+  "name": "airouter-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.1.0",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^6.4.5"
+  }
+}
